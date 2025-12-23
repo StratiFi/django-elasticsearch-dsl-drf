@@ -67,15 +67,11 @@ def sort_by_list(unsorted_dict, sorted_keys):
     __sorted_keys = tuple(sorted_keys) + tuple(
         set(__unsorted_dict_keys) - set(sorted_keys)
     )
-    if PY3:
-        for key in __sorted_keys:
-            if key in unsorted_dict:
-                unsorted_dict.move_to_end(key)
+    for key in __sorted_keys:
+        if key in unsorted_dict:
+            unsorted_dict.move_to_end(key)
 
-        return unsorted_dict
-    else:
-        sorted_dict = OrderedDict((key, unsorted_dict[key]) for key in __sorted_keys)
-        return sorted_dict
+    return unsorted_dict
 
 
 def more_like_this(
@@ -144,10 +140,10 @@ def more_like_this(
         kwargs["max_doc_freq"] = max_doc_freq
 
     _like_options = {
-        "_id": "{}".format(obj.pk),
-        "_index": "{}".format(_index),
+        "_id": f"{obj.pk}",
+        "_index": f"{_index}",
     }
     if not ELASTICSEARCH_GTE_7_0:
-        _like_options.update({"_type": "{}".format(_mapping)})
+        _like_options.update({"_type": f"{_mapping}"})
 
     return _search.query(MoreLikeThis(fields=fields, like=_like_options, **kwargs))

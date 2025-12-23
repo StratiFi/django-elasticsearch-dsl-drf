@@ -8,19 +8,19 @@ from books.models import Author
 from .factory_faker import Faker
 
 __all__ = (
-    'AuthorFactory',
-    'AuthorWithUniqueNameFactory',
-    'LimitedAuthorFactory',
-    'SingleAuthorFactory',
+    "AuthorFactory",
+    "AuthorWithUniqueNameFactory",
+    "LimitedAuthorFactory",
+    "SingleAuthorFactory",
 )
 
 
 class BaseAuthorFactory(DjangoModelFactory):
     """Base author factory."""
 
-    salutation = Faker('text', max_nb_chars=10)
-    name = Faker('name')
-    email = Faker('email')
+    salutation = Faker("text", max_nb_chars=10)
+    name = Faker("name")
+    email = Faker("email")
 
     class Meta:
         """Meta class."""
@@ -39,20 +39,18 @@ class AuthorWithUniqueNameFactory(BaseAuthorFactory):
     class Meta:
         """Meta class."""
 
-        django_get_or_create = ('name',)
+        django_get_or_create = ("name",)
 
 
 class LimitedAuthorFactory(BaseAuthorFactory):
     """Author factory, but limited to 20 authors."""
 
-    id = LazyAttribute(
-        lambda __x: random.randint(1, 20)
-    )
+    id = LazyAttribute(lambda __x: random.randint(1, 20))
 
     class Meta:
         """Meta class."""
 
-        django_get_or_create = ('id',)
+        django_get_or_create = ("id",)
 
 
 class SingleAuthorFactory(BaseAuthorFactory):
@@ -65,4 +63,4 @@ class SingleAuthorFactory(BaseAuthorFactory):
     class Meta:
         """Meta class."""
 
-        django_get_or_create = ('id',)
+        django_get_or_create = ("id",)

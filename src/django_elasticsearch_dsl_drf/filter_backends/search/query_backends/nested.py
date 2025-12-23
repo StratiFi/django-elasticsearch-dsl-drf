@@ -93,7 +93,7 @@ class NestedQueryBackend(BaseSearchQueryBackend):
                             }
                         # In case if we deal with structure 1
                         else:
-                            field = "{}.{}".format(path, _field)
+                            field = f"{path}.{_field}"
                             field_kwargs = {field: value}
 
                         queries = [Q("match", **field_kwargs)]
@@ -130,7 +130,7 @@ class NestedQueryBackend(BaseSearchQueryBackend):
                             }
                         # In case if we deal with structure 1
                         else:
-                            field = "{}.{}".format(path, _field)
+                            field = f"{path}.{_field}"
                             field_kwargs = {field: search_term}
 
                         queries.append(Q("match", **field_kwargs))

@@ -4,10 +4,10 @@ try:
     class Config(AppConfig):
         """Config."""
 
-        name = 'books'
-        label = 'books'
+        name = "books"
+        label = "books"
 
-    __all__ = ('Config',)
+    __all__ = ("Config",)
 
 except ImportError:
     pass

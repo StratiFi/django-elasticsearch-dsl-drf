@@ -5,14 +5,12 @@ from books.models import Tag
 from .analyzers import html_strip
 
 
-__all__ = ('TagDocument',)
+__all__ = ("TagDocument",)
 
 INDEX = Index(settings.ELASTICSEARCH_INDEX_NAMES[__name__])
 
 INDEX.settings(
-    number_of_shards=1,
-    number_of_replicas=1,
-    blocks={'read_only_allow_delete': None}
+    number_of_shards=1, number_of_replicas=1, blocks={"read_only_allow_delete": None}
 )
 
 
@@ -21,10 +19,10 @@ class TagDocument(Document):
     """Elasticsearch document for a Tag."""
 
     # Set unique title as the document id.
-    id = fields.KeywordField(attr='title')
+    id = fields.KeywordField(attr="title")
     title = fields.KeywordField()
 
-    class Django(object):
+    class Django:
         """Django Elasticsearch DSL ORM Meta."""
 
         model = Tag

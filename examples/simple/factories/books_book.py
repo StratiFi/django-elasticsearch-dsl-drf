@@ -23,40 +23,38 @@ from .books_tag import LimitedTagFactory, TagFactory, TagGenreFactory
 from .constants import NON_FAKER_BOOK_CONTENT
 
 __all__ = (
-    'BookChapterFactory',
-    'BookChapter110Factory',
-    'BookChapter111Factory',
-    'BookChapter112Factory',
-    'BookChapter20Factory',
-    'BookChapter21Factory',
-    'BookChapter22Factory',
-    'BookChapter60Factory',
-    'BookChapter61Factory',
-    'BookChapter62Factory',
-    'BookFactory',
-    'BookNovelFactory',
-    'BookWithoutOrdersFactory',
-    'BookWithoutTagsAndOrdersFactory',
-    'BookWithoutTagsFactory',
-    'BookWithUniqueTitleFactory',
-    'SingleBookFactory',
+    "BookChapterFactory",
+    "BookChapter110Factory",
+    "BookChapter111Factory",
+    "BookChapter112Factory",
+    "BookChapter20Factory",
+    "BookChapter21Factory",
+    "BookChapter22Factory",
+    "BookChapter60Factory",
+    "BookChapter61Factory",
+    "BookChapter62Factory",
+    "BookFactory",
+    "BookNovelFactory",
+    "BookWithoutOrdersFactory",
+    "BookWithoutTagsAndOrdersFactory",
+    "BookWithoutTagsFactory",
+    "BookWithUniqueTitleFactory",
+    "SingleBookFactory",
 )
 
 
 class BaseBookFactory(DjangoModelFactory):
     """Base book factory."""
 
-    title = Faker('text', max_nb_chars=100)
-    summary = Faker('text')
-    publisher = SubFactory('factories.books_publisher.LimitedPublisherFactory')
-    publication_date = Faker('date_between', start_date='-10y', end_date='now')
-    price = Faker('pydecimal', left_digits=2, right_digits=2, positive=True)
-    isbn = Faker('isbn13')
+    title = Faker("text", max_nb_chars=100)
+    summary = Faker("text")
+    publisher = SubFactory("factories.books_publisher.LimitedPublisherFactory")
+    publication_date = Faker("date_between", start_date="-10y", end_date="now")
+    price = Faker("pydecimal", left_digits=2, right_digits=2, positive=True)
+    isbn = Faker("isbn13")
     state = FuzzyChoice(dict(BOOK_PUBLISHING_STATUS_CHOICES).keys())
-    pages = LazyAttribute(
-        lambda __x: random.randint(10, 200)
-    )
-    created = Faker('date_time')
+    pages = LazyAttribute(lambda __x: random.randint(10, 200))
+    created = Faker("date_time")
 
     class Meta:
         """Meta class."""
@@ -90,13 +88,11 @@ class BaseBookFactory(DjangoModelFactory):
             amount = random.randint(2, 7)
             orders = OrderFactory.create_batch(amount, **kwargs)
             order_line_kwargs = dict(kwargs)
-            order_line_kwargs['book'] = obj
+            order_line_kwargs["book"] = obj
             for order in orders:
                 # Create 1 `OrderLine` object.
                 amount = random.randint(1, 5)
-                order_lines = OrderLineFactory.create_batch(
-                    amount, **order_line_kwargs
-                )
+                order_lines = OrderLineFactory.create_batch(amount, **order_line_kwargs)
                 order.lines.add(*order_lines)
 
 
@@ -110,7 +106,7 @@ class BookWithUniqueTitleFactory(BaseBookFactory):
     class Meta:
         """Meta class."""
 
-        django_get_or_create = ('title',)
+        django_get_or_create = ("title",)
 
 
 class SingleBookFactory(BaseBookFactory):
@@ -118,12 +114,12 @@ class SingleBookFactory(BaseBookFactory):
 
     id = 999999
     title = "Performance optimisation"
-    publisher = SubFactory('factories.books_publisher.SinglePublisherFactory')
+    publisher = SubFactory("factories.books_publisher.SinglePublisherFactory")
 
     class Meta:
         """Meta class."""
 
-        django_get_or_create = ('id',)
+        django_get_or_create = ("id",)
 
     @post_generation
     def authors(obj, created, extracted, **kwargs):
@@ -168,6 +164,7 @@ class BookWithoutTagsAndOrdersFactory(BaseBookFactory):
 
 # Second chapter, 3 times
 
+
 class BookChapterFactory(BookWithUniqueTitleFactory):
     """Book chapter factory."""
 
@@ -178,7 +175,7 @@ class BookChapterFactory(BookWithUniqueTitleFactory):
             # Create from 1 to 7 ``Tag`` objects.
             amount = random.randint(1, 7)
             tags = TagGenreFactory.create_batch(amount, **kwargs)
-            tag = TagFactory(title='Alice')
+            tag = TagFactory(title="Alice")
             tags.append(tag)
             obj.tags.add(*tags)
 
@@ -186,77 +183,80 @@ class BookChapterFactory(BookWithUniqueTitleFactory):
 class BookChapter20Factory(BookChapterFactory):
     """Book chapter II factory."""
 
-    title = NON_FAKER_BOOK_CONTENT[0]['title']
-    summary = NON_FAKER_BOOK_CONTENT[0]['summary']
-    description = NON_FAKER_BOOK_CONTENT[0]['description']
+    title = NON_FAKER_BOOK_CONTENT[0]["title"]
+    summary = NON_FAKER_BOOK_CONTENT[0]["summary"]
+    description = NON_FAKER_BOOK_CONTENT[0]["description"]
 
 
 class BookChapter21Factory(BookChapterFactory):
     """Book chapter II factory."""
 
-    title = NON_FAKER_BOOK_CONTENT[1]['title']
-    summary = NON_FAKER_BOOK_CONTENT[1]['summary']
-    description = NON_FAKER_BOOK_CONTENT[1]['description']
+    title = NON_FAKER_BOOK_CONTENT[1]["title"]
+    summary = NON_FAKER_BOOK_CONTENT[1]["summary"]
+    description = NON_FAKER_BOOK_CONTENT[1]["description"]
 
 
 class BookChapter22Factory(BookChapterFactory):
     """Book chapter II factory."""
 
-    title = NON_FAKER_BOOK_CONTENT[2]['title']
-    summary = NON_FAKER_BOOK_CONTENT[2]['summary']
-    description = NON_FAKER_BOOK_CONTENT[2]['description']
+    title = NON_FAKER_BOOK_CONTENT[2]["title"]
+    summary = NON_FAKER_BOOK_CONTENT[2]["summary"]
+    description = NON_FAKER_BOOK_CONTENT[2]["description"]
 
 
 # Sixth chapter, 3 times
 
+
 class BookChapter60Factory(BookChapterFactory):
     """Book chapter VI factory."""
 
-    title = NON_FAKER_BOOK_CONTENT[3]['title']
-    summary = NON_FAKER_BOOK_CONTENT[3]['summary']
-    description = NON_FAKER_BOOK_CONTENT[3]['description']
+    title = NON_FAKER_BOOK_CONTENT[3]["title"]
+    summary = NON_FAKER_BOOK_CONTENT[3]["summary"]
+    description = NON_FAKER_BOOK_CONTENT[3]["description"]
 
 
 class BookChapter61Factory(BookChapterFactory):
     """Book chapter VI factory."""
 
-    title = NON_FAKER_BOOK_CONTENT[4]['title']
-    summary = NON_FAKER_BOOK_CONTENT[4]['summary']
-    description = NON_FAKER_BOOK_CONTENT[4]['description']
+    title = NON_FAKER_BOOK_CONTENT[4]["title"]
+    summary = NON_FAKER_BOOK_CONTENT[4]["summary"]
+    description = NON_FAKER_BOOK_CONTENT[4]["description"]
 
 
 class BookChapter62Factory(BookChapterFactory):
     """Book chapter VI factory."""
 
-    title = NON_FAKER_BOOK_CONTENT[5]['title']
-    summary = NON_FAKER_BOOK_CONTENT[5]['summary']
-    description = NON_FAKER_BOOK_CONTENT[5]['description']
+    title = NON_FAKER_BOOK_CONTENT[5]["title"]
+    summary = NON_FAKER_BOOK_CONTENT[5]["summary"]
+    description = NON_FAKER_BOOK_CONTENT[5]["description"]
 
 
 # Eleventh chapter, 3 times
 
+
 class BookChapter110Factory(BookChapterFactory):
     """Book chapter XI factory."""
 
-    title = NON_FAKER_BOOK_CONTENT[6]['title']
-    summary = NON_FAKER_BOOK_CONTENT[6]['summary']
-    description = NON_FAKER_BOOK_CONTENT[6]['description']
+    title = NON_FAKER_BOOK_CONTENT[6]["title"]
+    summary = NON_FAKER_BOOK_CONTENT[6]["summary"]
+    description = NON_FAKER_BOOK_CONTENT[6]["description"]
 
 
 class BookChapter111Factory(BookChapterFactory):
     """Book chapter XI factory."""
 
-    title = NON_FAKER_BOOK_CONTENT[7]['title']
-    summary = NON_FAKER_BOOK_CONTENT[7]['summary']
-    description = NON_FAKER_BOOK_CONTENT[7]['description']
+    title = NON_FAKER_BOOK_CONTENT[7]["title"]
+    summary = NON_FAKER_BOOK_CONTENT[7]["summary"]
+    description = NON_FAKER_BOOK_CONTENT[7]["description"]
 
 
 class BookChapter112Factory(BookChapterFactory):
     """Book chapter XI factory."""
 
-    title = NON_FAKER_BOOK_CONTENT[8]['title']
-    summary = NON_FAKER_BOOK_CONTENT[8]['summary']
-    description = NON_FAKER_BOOK_CONTENT[8]['description']
+    title = NON_FAKER_BOOK_CONTENT[8]["title"]
+    summary = NON_FAKER_BOOK_CONTENT[8]["summary"]
+    description = NON_FAKER_BOOK_CONTENT[8]["description"]
+
 
 # Shekley books
 
@@ -271,6 +271,6 @@ class BookNovelFactory(BookWithUniqueTitleFactory):
             # Create from 1 to 7 ``Tag`` objects.
             amount = random.randint(1, 7)
             tags = TagGenreFactory.create_batch(amount, **kwargs)
-            tag = TagFactory(title='Sheckley')
+            tag = TagFactory(title="Sheckley")
             tags.append(tag)
             obj.tags.add(*tags)

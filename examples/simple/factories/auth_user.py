@@ -9,29 +9,29 @@ from factory.django import DjangoModelFactory
 from .factory_faker import Faker
 
 __all__ = (
-    'TEST_USERNAME',
-    'TEST_PASSWORD',
-    'AbstractUserFactory',
-    'InactiveUserFactory',
-    'UserFactory',
-    'StaffUserFactory',
-    'SuperuserUserFactory',
-    'SuperAdminUserFactory',
-    'TestUsernameSuperAdminUserFactory',
+    "TEST_USERNAME",
+    "TEST_PASSWORD",
+    "AbstractUserFactory",
+    "InactiveUserFactory",
+    "UserFactory",
+    "StaffUserFactory",
+    "SuperuserUserFactory",
+    "SuperAdminUserFactory",
+    "TestUsernameSuperAdminUserFactory",
 )
 
-TEST_USERNAME = 'test_user'
-TEST_PASSWORD = 'test_password'
+TEST_USERNAME = "test_user"
+TEST_PASSWORD = "test_password"
 
 
 class AbstractUserFactory(DjangoModelFactory):
     """Abstract factory for creating users."""
 
-    password = PostGenerationMethodCall('set_password', TEST_PASSWORD)
-    username = Sequence(lambda n: 'user%d' % n)
-    first_name = Faker('first_name_django')
-    last_name = Faker('last_name_django')
-    email = Faker('email')
+    password = PostGenerationMethodCall("set_password", TEST_PASSWORD)
+    username = Sequence(lambda n: "user%d" % n)
+    first_name = Faker("first_name_django")
+    last_name = Faker("last_name_django")
+    email = Faker("email")
 
     is_active = False
     is_staff = False
@@ -41,7 +41,7 @@ class AbstractUserFactory(DjangoModelFactory):
         """Meta options."""
 
         model = settings.AUTH_USER_MODEL
-        django_get_or_create = ('username',)
+        django_get_or_create = ("username",)
         abstract = True
 
 

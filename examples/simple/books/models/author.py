@@ -1,6 +1,6 @@
 from django.db import models
 
-__all__ = ('Author',)
+__all__ = ("Author",)
 
 
 class Author(models.Model):
@@ -9,7 +9,7 @@ class Author(models.Model):
     salutation = models.CharField(max_length=10)
     name = models.CharField(max_length=200)
     email = models.EmailField()
-    headshot = models.ImageField(upload_to='authors', null=True, blank=True)
+    headshot = models.ImageField(upload_to="authors", null=True, blank=True)
     birth_date = models.DateField(null=True, blank=True)
     biography = models.TextField(null=True, blank=True)
     phone_number = models.CharField(max_length=200, null=True, blank=True)

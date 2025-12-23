@@ -107,7 +107,7 @@ class FacetedSearchFilterBackend(BaseFilterBackend):
         faceted_search_fields = copy.deepcopy(view.faceted_search_fields)
 
         for field, options in faceted_search_fields.items():
-            if options is None or isinstance(options, string_types):
+            if options is None or isinstance(options, str):
                 faceted_search_fields[field] = {"field": options or field}
             elif "field" not in faceted_search_fields[field]:
                 faceted_search_fields[field]["field"] = field
@@ -179,7 +179,7 @@ class FacetedSearchFilterBackend(BaseFilterBackend):
                         __field: {
                             "facet": faceted_search_fields[__field]["facet"](
                                 field=faceted_search_fields[__field]["field"],
-                                **faceted_search_fields[__field]["options"]
+                                **faceted_search_fields[__field]["options"],
                             ),
                             "global": faceted_search_fields[__field]["global"],
                         }
@@ -196,7 +196,7 @@ class FacetedSearchFilterBackend(BaseFilterBackend):
         :return:
         """
         __facets = self.construct_facets(request, view)
-        for __field, __facet in iteritems(__facets):
+        for __field, __facet in __facets.items():
             agg = __facet["facet"].get_aggregation()
             agg_filter = Q("match_all")
 
@@ -254,9 +254,9 @@ class FacetedFilterSearchFilterBackend(
         # the fact that apply_filter is a classmethod means we can't store state on self,
         # so we hitch it onto queryset
         queryset._facets = self.construct_facets(request, view)
-        queryset._faceted_fields = set(
+        queryset._faceted_fields = {
             f["facet"]._params["field"] for f in queryset._facets.values()
-        )
+        }
         queryset._filters = defaultdict(list)
 
         # apply filters

@@ -1,9 +1,6 @@
-# -*- coding: utf-8 -*-
 """
 Serializers.
 """
-
-from __future__ import absolute_import, unicode_literals
 
 import copy
 from collections import OrderedDict
@@ -35,14 +32,14 @@ from .fields import (
 from .helpers import sort_by_list
 from .utils import EmptySearch
 
-__title__ = 'django_elasticsearch_dsl_drf.serializers'
-__author__ = 'Artur Barseghyan <artur.barseghyan@gmail.com>'
-__copyright__ = '2017-2020 Artur Barseghyan'
-__license__ = 'GPL 2.0/LGPL 2.1'
+__title__ = "django_elasticsearch_dsl_drf.serializers"
+__author__ = "Artur Barseghyan <artur.barseghyan@gmail.com>"
+__copyright__ = "2017-2020 Artur Barseghyan"
+__license__ = "GPL 2.0/LGPL 2.1"
 __all__ = (
-    'DocumentSerializer',
-    'DocumentSerializerMeta',
-    'Meta',
+    "DocumentSerializer",
+    "DocumentSerializerMeta",
+    "Meta",
 )
 
 
@@ -60,7 +57,7 @@ class Meta(type):
     index_aliases = {}
 
     def __new__(mcs, name, bases, attrs):
-        cls = super(Meta, mcs).__new__(mcs, str(name), bases, attrs)
+        cls = super().__new__(mcs, str(name), bases, attrs)
 
         if cls.fields and cls.exclude:
             raise ImproperlyConfigured(
@@ -85,9 +82,7 @@ class DocumentSerializerMeta(serializers.SerializerMetaclass):
     def __new__(mcs, name, bases, attrs):
         attrs.setdefault("_abstract", False)
 
-        cls = super(DocumentSerializerMeta, mcs).__new__(
-            mcs, str(name), bases, attrs
-        )
+        cls = super().__new__(mcs, str(name), bases, attrs)
 
         if getattr(cls, "Meta", None):
             cls.Meta = Meta("Meta", (Meta,), dict(cls.Meta.__dict__))
@@ -101,9 +96,7 @@ class DocumentSerializerMeta(serializers.SerializerMetaclass):
         return cls
 
 
-class DocumentSerializer(
-    six.with_metaclass(DocumentSerializerMeta, serializers.Serializer)
-):
+class DocumentSerializer(serializers.Serializer, metaclass=DocumentSerializerMeta):
     """A dynamic DocumentSerializer class."""
 
     _abstract = True
@@ -127,21 +120,19 @@ class DocumentSerializer(
         fields.FileField: CharField,  # TODO
         fields.KeywordField: CharField,
         fields.TextField: CharField,
-        }
+    }
 
     def __init__(self, instance=None, data=empty, **kwargs):
-        super(DocumentSerializer, self).__init__(instance, data, **kwargs)
+        super().__init__(instance, data, **kwargs)
 
-        if not hasattr(self.Meta, 'document') or self.Meta.document is None:
+        if not hasattr(self.Meta, "document") or self.Meta.document is None:
             raise ImproperlyConfigured(
-                "You must set the 'document' attribute on the serializer "
-                "Meta class."
+                "You must set the 'document' attribute on the serializer " "Meta class."
             )
 
         if not issubclass(self.Meta.document, (Document,)):
             raise ImproperlyConfigured(
-                "You must subclass the serializer 'document' from the Document"
-                "class."
+                "You must subclass the serializer 'document' from the Document" "class."
             )
 
         if not self.instance:
@@ -183,7 +174,7 @@ class DocumentSerializer(
         """
         cls_name = index_cls.__name__
         aliases = self.Meta.index_aliases
-        return aliases.get(cls_name, cls_name.split('.')[-1])
+        return aliases.get(cls_name, cls_name.split(".")[-1])
 
     def get_fields(self):
         """Get the required fields for serializing the result."""
@@ -202,7 +193,7 @@ class DocumentSerializer(
         if __fields == "__all__":
             __fields = ()
 
-        for field_name, field_type in six.iteritems(document_fields):
+        for field_name, field_type in document_fields.items():
             orig_name = field_name[:]
 
             # Don't use this field if it is in `ignore_fields`
@@ -220,17 +211,14 @@ class DocumentSerializer(
             # Look up the field attributes on the current index model,
             # in order to correctly instantiate the serializer field.
 
-            kwargs = self._get_default_field_kwargs(
-                model,
-                field_name,
-                field_type
-            )
+            kwargs = self._get_default_field_kwargs(model, field_name, field_type)
             # If field not in the mapping, just skip
             if field_type.__class__ not in self._field_mapping:
                 continue
 
-            field_mapping[field_name] = \
-                self._field_mapping[field_type.__class__](**kwargs)
+            field_mapping[field_name] = self._field_mapping[field_type.__class__](
+                **kwargs
+            )
 
         # Add any explicitly declared fields. They *will* override any index
         # fields in case of naming collision!.

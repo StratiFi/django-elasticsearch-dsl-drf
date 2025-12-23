@@ -64,7 +64,7 @@ LOOSE_VERSIONS = (
 )
 
 for __v in LOOSE_VERSIONS:
-    __var_name = "LOOSE_VERSION_{0}".format(__v.replace(".", "_"))
+    __var_name = "LOOSE_VERSION_{}".format(__v.replace(".", "_"))
     globals()[__var_name] = LooseVersion(__v)
     __all__.append(__var_name)
 
@@ -73,12 +73,12 @@ EXACT_VERSIONS = LOOSE_VERSIONS[:-1]
 
 for __i, __v in enumerate(EXACT_VERSIONS):
     __l_cur = globals()[
-        "LOOSE_VERSION_{0}" "".format(LOOSE_VERSIONS[__i].replace(".", "_"))
+        "LOOSE_VERSION_{}" "".format(LOOSE_VERSIONS[__i].replace(".", "_"))
     ]
     __l_nxt = globals()[
-        "LOOSE_VERSION_{0}" "".format(LOOSE_VERSIONS[__i + 1].replace(".", "_"))
+        "LOOSE_VERSION_{}" "".format(LOOSE_VERSIONS[__i + 1].replace(".", "_"))
     ]
-    __var_name = "ELASTICSEARCH_{0}".format(__v.replace(".", "_"))
+    __var_name = "ELASTICSEARCH_{}".format(__v.replace(".", "_"))
     globals()[__var_name] = __l_cur <= LOOSE_ELASTICSEARCH_VERSION < __l_nxt
     __all__.append(__var_name)
 
@@ -87,9 +87,9 @@ LTE_VERSIONS = LOOSE_VERSIONS[:-1]
 
 for __i, __v in enumerate(EXACT_VERSIONS):
     __l_cur = globals()[
-        "LOOSE_VERSION_{0}" "".format(LOOSE_VERSIONS[__i].replace(".", "_"))
+        "LOOSE_VERSION_{}" "".format(LOOSE_VERSIONS[__i].replace(".", "_"))
     ]
-    __var_name = "ELASTICSEARCH_LTE_{0}".format(__v.replace(".", "_"))
+    __var_name = "ELASTICSEARCH_LTE_{}".format(__v.replace(".", "_"))
     globals()[__var_name] = LOOSE_ELASTICSEARCH_MINOR_VERSION <= __l_cur
     __all__.append(__var_name)
 
@@ -98,9 +98,9 @@ GTE_VERSIONS = LOOSE_VERSIONS[:-1]
 
 for __i, __v in enumerate(EXACT_VERSIONS):
     __l_cur = globals()[
-        "LOOSE_VERSION_{0}" "".format(LOOSE_VERSIONS[__i].replace(".", "_"))
+        "LOOSE_VERSION_{}" "".format(LOOSE_VERSIONS[__i].replace(".", "_"))
     ]
-    __var_name = "ELASTICSEARCH_GTE_{0}".format(__v.replace(".", "_"))
+    __var_name = "ELASTICSEARCH_GTE_{}".format(__v.replace(".", "_"))
     globals()[__var_name] = LOOSE_ELASTICSEARCH_MINOR_VERSION >= __l_cur
     __all__.append(__var_name)
 

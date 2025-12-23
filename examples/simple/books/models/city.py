@@ -1,10 +1,8 @@
-from __future__ import unicode_literals
-
 import datetime
 
 from django.db import models
 
-__all__ = ('City',)
+__all__ = ("City",)
 
 
 class City(models.Model):
@@ -12,20 +10,12 @@ class City(models.Model):
 
     name = models.CharField(max_length=255)
     info = models.TextField(null=True, blank=True)
-    country = models.ForeignKey('books.Country', on_delete=models.CASCADE)
+    country = models.ForeignKey("books.Country", on_delete=models.CASCADE)
     latitude = models.DecimalField(
-        null=True,
-        blank=True,
-        decimal_places=15,
-        max_digits=19,
-        default=0
+        null=True, blank=True, decimal_places=15, max_digits=19, default=0
     )
     longitude = models.DecimalField(
-        null=True,
-        blank=True,
-        decimal_places=15,
-        max_digits=19,
-        default=0
+        null=True, blank=True, decimal_places=15, max_digits=19, default=0
     )
     capital = models.BooleanField(default=False)
 
@@ -44,8 +34,8 @@ class City(models.Model):
         Used in Elasticsearch indexing/tests of `geo_distance` native filter.
         """
         return {
-            'lat': self.latitude,
-            'lon': self.longitude,
+            "lat": self.latitude,
+            "lon": self.longitude,
         }
 
     @property
@@ -62,7 +52,7 @@ class City(models.Model):
 
         Used in Elasticsearch indexing/tests of complex fields.
         """
-        return {'true': True, 'false': False}
+        return {"true": True, "false": False}
 
     @property
     def datetime_list_indexing(self):
@@ -72,7 +62,7 @@ class City(models.Model):
         """
         return [
             datetime.datetime.now(),
-            datetime.datetime.now() - datetime.timedelta(days=1)
+            datetime.datetime.now() - datetime.timedelta(days=1),
         ]
 
     @property
@@ -82,8 +72,8 @@ class City(models.Model):
         Used in Elasticsearch indexing/tests of complex fields.
         """
         return {
-            'today': datetime.datetime.now(),
-            'yesterday': datetime.datetime.now() - datetime.timedelta(days=1)
+            "today": datetime.datetime.now(),
+            "yesterday": datetime.datetime.now() - datetime.timedelta(days=1),
         }
 
     @property
@@ -100,7 +90,7 @@ class City(models.Model):
 
         Used in Elasticsearch indexing/tests of complex fields.
         """
-        return {'pi': 3.14159, 'e': 2.71828}
+        return {"pi": 3.14159, "e": 2.71828}
 
     @property
     def integer_list_indexing(self):
@@ -116,4 +106,4 @@ class City(models.Model):
 
         Used in Elasticsearch indexing/tests of complex fields.
         """
-        return {'twelve': 12, 'five': 5}
+        return {"twelve": 12, "five": 5}

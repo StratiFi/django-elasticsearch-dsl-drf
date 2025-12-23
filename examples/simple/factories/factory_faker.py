@@ -1,24 +1,20 @@
-# coding=utf-8
-
-from __future__ import unicode_literals
-
 from factory import Faker as OriginalFaker
 
 from faker import Faker as FakerFaker
 from faker.providers import BaseProvider
 
 __all__ = (
-    'DjangoUserProvider',
-    'EnGbFaker',
-    'Faker',
-    'NlNlFaker',
+    "DjangoUserProvider",
+    "EnGbFaker",
+    "Faker",
+    "NlNlFaker",
 )
 
 
 class NlNlFaker(OriginalFaker):
     """Override to change the default locale."""
 
-    _DEFAULT_LOCALE = 'nl_NL'
+    _DEFAULT_LOCALE = "nl_NL"
 
 
 Faker = NlNlFaker
@@ -27,11 +23,12 @@ Faker = NlNlFaker
 class EnGbFaker(OriginalFaker):
     """Override to change the default locale."""
 
-    _DEFAULT_LOCALE = 'en_GB'
+    _DEFAULT_LOCALE = "en_GB"
 
 
 class DjangoUserProvider(BaseProvider):
     """Django user provider."""
+
     _fake = FakerFaker()
 
     @classmethod

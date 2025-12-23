@@ -3,7 +3,7 @@ from django_elasticsearch_dsl_drf.serializers import DocumentSerializer
 from ..documents import TagDocument
 
 
-__all__ = ('TagDocumentSerializer',)
+__all__ = ("TagDocumentSerializer",)
 
 
 class TagDocumentSerializer(DocumentSerializer):
@@ -14,6 +14,6 @@ class TagDocumentSerializer(DocumentSerializer):
 
         document = TagDocument
         fields = (
-            'id',
-            'title',
+            "id",
+            "title",
         )

@@ -1,12 +1,12 @@
 from .base import *
 
 if LOGGING:
-    LOGGING['loggers'].update(
+    LOGGING["loggers"].update(
         {
-            'django.db': {
-                'handlers': ['console'],
-                'level': 'DEBUG',
-                'propagate': False,
+            "django.db": {
+                "handlers": ["console"],
+                "level": "DEBUG",
+                "propagate": False,
             }
         }
     )
@@ -14,8 +14,8 @@ if LOGGING:
 
 # Elasticsearch configuration
 ELASTICSEARCH_DSL = {
-    'default': {
-        'hosts': 'localhost:9201',
-        'timeout': 30,
+    "default": {
+        "hosts": "localhost:9201",
+        "timeout": 30,
     },
 }

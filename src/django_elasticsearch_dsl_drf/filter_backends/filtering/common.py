@@ -100,7 +100,7 @@ class FilteringFilterBackend(BaseFilterBackend, FilterBackendMixin):
         filter_fields = view.filter_fields
 
         for field, options in filter_fields.items():
-            if options is None or isinstance(options, string_types):
+            if options is None or isinstance(options, str):
                 filter_fields[field] = {"field": options or field}
             elif "field" not in filter_fields[field]:
                 filter_fields[field]["field"] = field
@@ -433,7 +433,7 @@ class FilteringFilterBackend(BaseFilterBackend, FilterBackendMixin):
         return cls.apply_query(
             queryset=queryset,
             options=options,
-            args=[Q("wildcard", **{options["field"]: "*{}*".format(value)})],
+            args=[Q("wildcard", **{options["field"]: f"*{value}*"})],
         )
 
     @classmethod
@@ -460,7 +460,7 @@ class FilteringFilterBackend(BaseFilterBackend, FilterBackendMixin):
         return cls.apply_query(
             queryset=queryset,
             options=options,
-            args=[Q("wildcard", **{options["field"]: "*{}".format(value)})],
+            args=[Q("wildcard", **{options["field"]: f"*{value}"})],
         )
 
     @classmethod

@@ -186,7 +186,7 @@ class LocationDocument(Document):
     revenue = fields.FloatField(attr="revenue")
     coordinates = fields.GeoPointField(attr="location_field_indexing")
 
-    class Django(object):
+    class Django:
         model = Location  # The model associate with this Document
 
     class Meta:

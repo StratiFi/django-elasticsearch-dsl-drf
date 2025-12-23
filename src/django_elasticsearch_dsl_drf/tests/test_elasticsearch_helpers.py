@@ -1,9 +1,6 @@
-# -*- coding: utf-8 -*-
 """
 Test helpers.
 """
-
-from __future__ import absolute_import, unicode_literals
 
 import unittest
 
@@ -15,13 +12,11 @@ from ..elasticsearch_helpers import delete_all_indices, get_all_indices
 
 from .base import BaseTestCase
 
-__title__ = 'django_elasticsearch_dsl_drf.tests.test_elasticsearch_helpers'
-__author__ = 'Artur Barseghyan <artur.barseghyan@gmail.com>'
-__copyright__ = '2017-2020 Artur Barseghyan'
-__license__ = 'GPL 2.0/LGPL 2.1'
-__all__ = (
-    'TestElasticsearchHelpers',
-)
+__title__ = "django_elasticsearch_dsl_drf.tests.test_elasticsearch_helpers"
+__author__ = "Artur Barseghyan <artur.barseghyan@gmail.com>"
+__copyright__ = "2017-2020 Artur Barseghyan"
+__license__ = "GPL 2.0/LGPL 2.1"
+__all__ = ("TestElasticsearchHelpers",)
 
 
 @pytest.mark.django_db
@@ -35,18 +30,18 @@ class TestElasticsearchHelpers(BaseTestCase):
         delete_all_indices(with_protected=True)
 
         self.sleep()
-        call_command('search_index', '--rebuild', '-f')
+        call_command("search_index", "--rebuild", "-f")
 
         res = set(get_all_indices())
         expected = {
-            'test_address',
-            'test_location',
-            'test_publisher',
-            'test_journal',
-            'test_city',
-            'test_author',
-            'test_book',
-            'test_tag',
+            "test_address",
+            "test_location",
+            "test_publisher",
+            "test_journal",
+            "test_city",
+            "test_author",
+            "test_book",
+            "test_tag",
         }
 
         self.assertSetEqual(res, expected)
@@ -65,5 +60,5 @@ class TestElasticsearchHelpers(BaseTestCase):
         self._delete_all_indices()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

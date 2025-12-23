@@ -7,14 +7,15 @@ of the indexed related fields (such as foreign keys and many-to-many fields;
 in case of `books.Book` model one of them is `publisher`) the Book index is
 updated as well.
 """
+
 from django.db.models.signals import post_save, post_delete
 from django.dispatch import receiver
 
 from django_elasticsearch_dsl.registries import registry
 
 __all__ = (
-    'update_document',
-    'delete_document',
+    "update_document",
+    "delete_document",
 )
 
 
@@ -28,23 +29,23 @@ def update_document(sender, **kwargs):
     """
     app_label = sender._meta.app_label
     model_name = sender._meta.model_name
-    instance = kwargs['instance']
+    instance = kwargs["instance"]
 
-    if app_label == 'book':
+    if app_label == "book":
         # If it is `books.Publisher` that is being updated.
-        if model_name == 'publisher':
+        if model_name == "publisher":
             instances = instance.books.all()
             for _instance in instances:
                 registry.update(_instance)
 
         # If it is `books.Author` that is being updated.
-        if model_name == 'author':
+        if model_name == "author":
             instances = instance.books.all()
             for _instance in instances:
                 registry.update(_instance)
 
         # If it is `books.Tag` that is being updated.
-        if model_name == 'tag':
+        if model_name == "tag":
             instances = instance.books.all()
             for _instance in instances:
                 registry.update(_instance)
@@ -60,25 +61,25 @@ def delete_document(sender, **kwargs):
     """
     app_label = sender._meta.app_label
     model_name = sender._meta.model_name
-    instance = kwargs['instance']
+    instance = kwargs["instance"]
 
-    if app_label == 'books':
+    if app_label == "books":
         # If it is `books.Publisher` that is being updated.
-        if model_name == 'publisher':
+        if model_name == "publisher":
             instances = instance.books.all()
             for _instance in instances:
                 registry.update(_instance)
                 # registry.delete(_instance, raise_on_error=False)
 
         # If it is `books.Author` that is being updated.
-        if model_name == 'author':
+        if model_name == "author":
             instances = instance.books.all()
             for _instance in instances:
                 registry.update(_instance)
                 # registry.delete(_instance, raise_on_error=False)
 
         # If it is `books.Tag` that is being updated.
-        if model_name == 'tag':
+        if model_name == "tag":
             instances = instance.books.all()
             for _instance in instances:
                 registry.update(_instance)

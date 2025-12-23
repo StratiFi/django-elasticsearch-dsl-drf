@@ -10,7 +10,7 @@ from books.models import Journal
 from .analyzers import html_strip
 
 
-__all__ = ('JournalDocument',)
+__all__ = ("JournalDocument",)
 
 INDEX = Index(settings.ELASTICSEARCH_INDEX_NAMES[__name__])
 
@@ -18,7 +18,7 @@ INDEX = Index(settings.ELASTICSEARCH_INDEX_NAMES[__name__])
 INDEX.settings(
     number_of_shards=1,
     number_of_replicas=1,
-    blocks={'read_only_allow_delete': None},
+    blocks={"read_only_allow_delete": None},
     # read_only_allow_delete=False
 )
 
@@ -36,8 +36,8 @@ class JournalDocument(Document):
     isbn = StringField(
         analyzer=html_strip,
         fields={
-            'raw': KeywordField(),
-        }
+            "raw": KeywordField(),
+        },
     )
 
     # ********************************************************************
@@ -47,29 +47,27 @@ class JournalDocument(Document):
     title = StringField(
         analyzer=html_strip,
         fields={
-            'raw': KeywordField(),
-            'suggest': fields.CompletionField(),
-            'edge_ngram_completion': StringField(
-                analyzer=edge_ngram_completion
-            ),
-            'mlt': StringField(analyzer='english'),
-        }
+            "raw": KeywordField(),
+            "suggest": fields.CompletionField(),
+            "edge_ngram_completion": StringField(analyzer=edge_ngram_completion),
+            "mlt": StringField(analyzer="english"),
+        },
     )
 
     description = StringField(
         analyzer=html_strip,
         fields={
-            'raw': KeywordField(),
-            'mlt': StringField(analyzer='english'),
-        }
+            "raw": KeywordField(),
+            "mlt": StringField(analyzer="english"),
+        },
     )
 
     summary = StringField(
         analyzer=html_strip,
         fields={
-            'raw': KeywordField(),
-            'mlt': StringField(analyzer='english'),
-        }
+            "raw": KeywordField(),
+            "mlt": StringField(analyzer="english"),
+        },
     )
 
     # ********************************************************************
@@ -89,9 +87,9 @@ class JournalDocument(Document):
     stock_count = fields.IntegerField()
 
     # Date created
-    created = fields.DateField(attr='created_indexing')
+    created = fields.DateField(attr="created_indexing")
 
-    class Django(object):
+    class Django:
         model = Journal  # The model associate with this Document
 
     class Meta:
