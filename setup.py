@@ -156,12 +156,11 @@ except:
     readme = ''
 
 install_requires = [
-    'six>=1.9',
-    'django-nine>=0.2',
-    'django-elasticsearch-dsl>=6.4.1',
-    'elasticsearch-dsl',
-    'elasticsearch',
-    'djangorestframework',
+    "six>=1.9",
+    "django-nine>=0.2",
+    "django-elasticsearch-dsl>=8.2.0,<9.0.0",
+    "elasticsearch>=8.18.0,<9.0.0",
+    "djangorestframework",
 ]
 
 extras_require = []
@@ -186,6 +185,7 @@ setup(
         "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
+        "Programming Language :: Python :: 3.10",
         "Environment :: Web Environment",
         "License :: OSI Approved :: GNU General Public License v2 (GPLv2)",
         "License :: OSI Approved :: GNU Lesser General Public License v2 or "

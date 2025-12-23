@@ -47,7 +47,6 @@ class TestPipHelpers(unittest.TestCase):
         installed_packages = get_installed_packages()
         self.assertIn('Django', installed_packages)
         self.assertIn('elasticsearch', installed_packages)
-        self.assertIn('elasticsearch-dsl', installed_packages)
 
     def test_get_installed_packages_with_versions(self):
         """Test `get_installed_packages`.
@@ -65,5 +64,4 @@ class TestPipHelpers(unittest.TestCase):
         """
         self.assertTrue(check_if_installed('Django'))
         self.assertTrue(check_if_installed('elasticsearch'))
-        self.assertTrue(check_if_installed('elasticsearch-dsl'))
         self.assertFalse(check_if_installed('django-fobi'))

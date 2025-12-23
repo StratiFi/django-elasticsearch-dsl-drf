@@ -3,13 +3,13 @@ from django_elasticsearch_dsl_drf.filter_backends.mixins import (
 )
 from rest_framework.filters import BaseFilterBackend
 
-__all__ = ('NestedContinentsBackend',)
+__all__ = ("NestedContinentsBackend",)
 
 
 class NestedContinentsBackend(BaseFilterBackend, FilterBackendMixin):
     """Adds nesting to continents."""
 
-    faceted_search_param = 'nested_facet'
+    faceted_search_param = "nested_facet"
 
     def get_faceted_search_query_params(self, request):
         """Get faceted search query params.
@@ -28,36 +28,22 @@ class NestedContinentsBackend(BaseFilterBackend, FilterBackendMixin):
         :param queryset: Base queryset.
         :param view: View.
         :type request: rest_framework.request.Request
-        :type queryset: elasticsearch_dsl.search.Search
+        :type queryset: elasticsearch.dsl.search.Search
         :type view: rest_framework.viewsets.ReadOnlyModelViewSet
         :return: Updated queryset.
-        :rtype: elasticsearch_dsl.search.Search
+        :rtype: elasticsearch.dsl.search.Search
         """
         facets = self.get_faceted_search_query_params(request)
 
-        if 'continent' in facets:
-            queryset \
-                .aggs\
-                .bucket('continents',
-                        'nested',
-                        path='continent') \
-                .bucket('continent_name',
-                        'terms',
-                        field='continent.name.raw',
-                        size=10) \
-                .bucket('counties',
-                        'nested',
-                        path='continent.country') \
-                .bucket('country_name',
-                        'terms',
-                        field='continent.country.name.raw',
-                        size=10) \
-                .bucket('city',
-                        'nested',
-                        path='continent.country.city') \
-                .bucket('city_name',
-                        'terms',
-                        field='continent.country.city.name.raw',
-                        size=10)
+        if "continent" in facets:
+            queryset.aggs.bucket("continents", "nested", path="continent").bucket(
+                "continent_name", "terms", field="continent.name.raw", size=10
+            ).bucket("counties", "nested", path="continent.country").bucket(
+                "country_name", "terms", field="continent.country.name.raw", size=10
+            ).bucket(
+                "city", "nested", path="continent.country.city"
+            ).bucket(
+                "city_name", "terms", field="continent.country.city.name.raw", size=10
+            )
 
         return queryset
