@@ -14,9 +14,7 @@ from django_elasticsearch_dsl_drf.filter_backends import (
 from .default import BookDocumentViewSet
 from ...serializers.book import BookDocumentSourceSerializer
 
-__all__ = (
-    'BookSourceSearchBackendDocumentViewSet',
-)
+__all__ = ("BookSourceSearchBackendDocumentViewSet",)
 
 
 class BookSourceSearchBackendDocumentViewSet(BookDocumentViewSet):

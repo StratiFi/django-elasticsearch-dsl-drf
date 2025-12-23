@@ -4,8 +4,8 @@ from django_elasticsearch_dsl_drf.serializers import DocumentSerializer
 from ..documents import PublisherDocument
 
 __all__ = (
-    'PublisherDocumentSerializer',
-    'PublisherDocumentSimpleSerializer',
+    "PublisherDocumentSerializer",
+    "PublisherDocumentSimpleSerializer",
 )
 
 
@@ -26,13 +26,13 @@ class PublisherDocumentSerializer(serializers.Serializer):
         """Meta options."""
 
         fields = (
-            'id',
-            'name',
-            'address',
-            'city',
-            'state_province',
-            'country',
-            'website',
+            "id",
+            "name",
+            "address",
+            "city",
+            "state_province",
+            "country",
+            "website",
         )
 
     def create(self, validated_data):
@@ -77,12 +77,12 @@ class PublisherDocumentSimpleSerializer(DocumentSerializer):
 
         document = PublisherDocument
         fields = (
-            'id',
-            'name',
-            'address',
-            'city',
-            'state_province',
-            'country',
-            'website',
-            'location',
+            "id",
+            "name",
+            "address",
+            "city",
+            "state_province",
+            "country",
+            "website",
+            "location",
         )

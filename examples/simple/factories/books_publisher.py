@@ -8,22 +8,22 @@ from books.models import Publisher
 from .factory_faker import Faker
 
 __all__ = (
-    'PublisherFactory',
-    'PublisherWithUniqueNameFactory',
-    'LimitedPublisherFactory',
-    'SinglePublisherFactory',
+    "PublisherFactory",
+    "PublisherWithUniqueNameFactory",
+    "LimitedPublisherFactory",
+    "SinglePublisherFactory",
 )
 
 
 class BasePublisherFactory(DjangoModelFactory):
     """Base publisher factory."""
 
-    name = Faker('company')
-    address = Faker('address')
-    city = Faker('city')
-    state_province = Faker('province')
-    country = Faker('country')
-    website = Faker('url')
+    name = Faker("company")
+    address = Faker("address")
+    city = Faker("city")
+    state_province = Faker("province")
+    country = Faker("country")
+    website = Faker("url")
     latitude = -32.23421
     longitude = 43.23411
 
@@ -44,20 +44,18 @@ class PublisherWithUniqueNameFactory(BasePublisherFactory):
     class Meta:
         """Meta class."""
 
-        django_get_or_create = ('name',)
+        django_get_or_create = ("name",)
 
 
 class LimitedPublisherFactory(BasePublisherFactory):
     """Publisher factory, but limited to 20 publishers."""
 
-    id = LazyAttribute(
-        lambda __x: random.randint(1, 20)
-    )
+    id = LazyAttribute(lambda __x: random.randint(1, 20))
 
     class Meta:
         """Meta class."""
 
-        django_get_or_create = ('id',)
+        django_get_or_create = ("id",)
 
 
 class SinglePublisherFactory(BasePublisherFactory):
@@ -74,4 +72,4 @@ class SinglePublisherFactory(BasePublisherFactory):
     class Meta:
         """Meta class."""
 
-        django_get_or_create = ('id',)
+        django_get_or_create = ("id",)

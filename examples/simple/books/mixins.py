@@ -1,17 +1,14 @@
 from django.http import JsonResponse
 
-__all__ = ('JSONResponseMixin',)
+__all__ = ("JSONResponseMixin",)
 
 
-class JSONResponseMixin(object):
+class JSONResponseMixin:
     """A mixin that can be used to render a JSON response."""
 
     def render_to_json_response(self, context, **response_kwargs):
         """Return a JSON response, transforming 'context' for the payload."""
-        return JsonResponse(
-            self.get_data(context),
-            **response_kwargs
-        )
+        return JsonResponse(self.get_data(context), **response_kwargs)
 
     def get_data(self, context):
         """Return an object to be serialized as JSON by json.dumps()."""

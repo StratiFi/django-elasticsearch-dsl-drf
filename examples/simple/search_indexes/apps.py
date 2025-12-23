@@ -4,10 +4,10 @@ try:
     class Config(AppConfig):
         """Config."""
 
-        name = 'search_indexes'
-        label = 'search_indexes'
+        name = "search_indexes"
+        label = "search_indexes"
 
-    __all__ = ('Config',)
+    __all__ = ("Config",)
 
 except ImportError:
     pass

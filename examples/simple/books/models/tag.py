@@ -1,7 +1,7 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
-__all__ = ('Tag',)
+__all__ = ("Tag",)
 
 
 class Tag(models.Model):

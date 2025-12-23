@@ -1,8 +1,6 @@
-from __future__ import unicode_literals
-
 from django.db import models
 
-__all__ = ('Continent',)
+__all__ = ("Continent",)
 
 
 class Continent(models.Model):
@@ -11,18 +9,10 @@ class Continent(models.Model):
     name = models.CharField(max_length=255)
     info = models.TextField(null=True, blank=True)
     latitude = models.DecimalField(
-        null=True,
-        blank=True,
-        decimal_places=15,
-        max_digits=19,
-        default=0
+        null=True, blank=True, decimal_places=15, max_digits=19, default=0
     )
     longitude = models.DecimalField(
-        null=True,
-        blank=True,
-        decimal_places=15,
-        max_digits=19,
-        default=0
+        null=True, blank=True, decimal_places=15, max_digits=19, default=0
     )
 
     class Meta:
@@ -40,6 +30,6 @@ class Continent(models.Model):
         Used in Elasticsearch indexing/tests of `geo_distance` native filter.
         """
         return {
-            'lat': self.latitude,
-            'lon': self.longitude,
+            "lat": self.latitude,
+            "lon": self.longitude,
         }

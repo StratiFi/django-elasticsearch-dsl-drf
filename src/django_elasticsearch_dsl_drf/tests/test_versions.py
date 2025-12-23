@@ -1,5 +1,5 @@
 import unittest
-import mock
+from unittest import mock
 
 # For Python3 >= 3.4
 try:

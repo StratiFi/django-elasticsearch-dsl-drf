@@ -1,8 +1,6 @@
 from .default import BookDocumentViewSet
 
-__all__ = (
-    'BookIgnoreIndexErrorsDocumentViewSet',
-)
+__all__ = ("BookIgnoreIndexErrorsDocumentViewSet",)
 
 
 class BookIgnoreIndexErrorsDocumentViewSet(BookDocumentViewSet):

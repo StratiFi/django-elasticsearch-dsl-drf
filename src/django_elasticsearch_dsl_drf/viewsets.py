@@ -1,9 +1,6 @@
-# -*- coding: utf-8 -*-
-
 """
 Base ViewSets.
 """
-from __future__ import absolute_import, unicode_literals
 
 import copy
 
@@ -36,7 +33,7 @@ __all__ = (
 )
 
 
-class SuggestMixin(object):
+class SuggestMixin:
     """Suggest mixin."""
 
     @action(detail=False)
@@ -51,7 +48,7 @@ class SuggestMixin(object):
         return Response(page)
 
 
-class FunctionalSuggestMixin(object):
+class FunctionalSuggestMixin:
     """Functional suggest mixin."""
 
     @action(detail=False)
@@ -77,7 +74,7 @@ class FunctionalSuggestMixin(object):
         return Response(page)
 
 
-class MoreLikeThisMixin(object):
+class MoreLikeThisMixin:
     """More-like-this mixin."""
 
     @action(detail=True)
@@ -108,22 +105,22 @@ class MoreLikeThisMixin(object):
                     MoreLikeThis(
                         fields=fields,
                         like={
-                            "_id": "{}".format(id_),
-                            "_index": "{}".format(self.index),
-                            "_type": "{}".format(self.mapping),
+                            "_id": f"{id_}",
+                            "_index": f"{self.index}",
+                            "_type": f"{self.mapping}",
                         },
-                        **kwargs
+                        **kwargs,
                     )
                 ).sort("_score")
             else:
                 queryset = queryset.query(
                     MoreLikeThis(
                         like={
-                            "_id": "{}".format(id_),
-                            "_index": "{}".format(self.index),
-                            "_type": "{}".format(self.mapping),
+                            "_id": f"{id_}",
+                            "_index": f"{self.index}",
+                            "_type": f"{self.mapping}",
                         },
-                        **kwargs
+                        **kwargs,
                     )
                 ).sort("_score")
 
@@ -160,7 +157,7 @@ class BaseDocumentViewSet(ReadOnlyModelViewSet):
                 doc_type=self.document._doc_type.name,
             )
 
-        super(BaseDocumentViewSet, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
     def run_checks(self):
         assert self.document is not None

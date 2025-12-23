@@ -2,9 +2,7 @@ from django_elasticsearch_dsl_drf.utils import EmptySearch
 
 from .default import BookDocumentViewSet
 
-__all__ = (
-    'BookNoRecordsDocumentViewSet',
-)
+__all__ = ("BookNoRecordsDocumentViewSet",)
 
 
 class BookNoRecordsDocumentViewSet(BookDocumentViewSet):

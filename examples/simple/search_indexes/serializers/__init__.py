@@ -14,15 +14,15 @@ from .publisher import (
 from .tag import TagDocumentSerializer
 
 __all__ = (
-    'AddressDocumentSerializer',
-    'AuthorDocumentSimpleSerializer',
-    'BookDocumentSerializer',
-    'BookDocumentSimpleSerializer',
-    'CityDocumentSerializer',
-    'JournalDocumentSerializer',
-    'FrontendAddressDocumentSerializer',
-    'LocationDocumentSerializer',
-    'PublisherDocumentSerializer',
-    'PublisherDocumentSimpleSerializer',
-    'TagDocumentSerializer',
+    "AddressDocumentSerializer",
+    "AuthorDocumentSimpleSerializer",
+    "BookDocumentSerializer",
+    "BookDocumentSimpleSerializer",
+    "CityDocumentSerializer",
+    "JournalDocumentSerializer",
+    "FrontendAddressDocumentSerializer",
+    "LocationDocumentSerializer",
+    "PublisherDocumentSerializer",
+    "PublisherDocumentSimpleSerializer",
+    "TagDocumentSerializer",
 )

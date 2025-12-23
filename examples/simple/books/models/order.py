@@ -2,17 +2,14 @@ from django.conf import settings
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
-__all__ = ('Order',)
+__all__ = ("Order",)
 
 
 class Order(models.Model):
     """Order."""
 
-    owner = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE
-    )
-    lines = models.ManyToManyField('books.OrderLine', blank=True)
+    owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    lines = models.ManyToManyField("books.OrderLine", blank=True)
     finished = models.BooleanField(default=False)
     created = models.DateField(auto_now_add=True)
     updated = models.DateField(auto_now=True)
@@ -23,7 +20,7 @@ class Order(models.Model):
         ordering = ["-created"]
 
     def __str__(self):
-        return _('Order')
+        return _("Order")
 
     @property
     def created_indexing(self):

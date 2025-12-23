@@ -1,12 +1,8 @@
 from django.db import models
 
-from ..constants import (
-    YES,
-    NO,
-    LOCATION_CATEGORY_CHOICES
-)
+from ..constants import YES, NO, LOCATION_CATEGORY_CHOICES
 
-__all__ = ('Location',)
+__all__ = ("Location",)
 
 
 class Location(models.Model):
@@ -26,18 +22,10 @@ class Location(models.Model):
     rental_valuation = models.FloatField()
     revenue = models.FloatField()
     latitude = models.DecimalField(
-        null=True,
-        blank=True,
-        decimal_places=15,
-        max_digits=19,
-        default=0
+        null=True, blank=True, decimal_places=15, max_digits=19, default=0
     )
     longitude = models.DecimalField(
-        null=True,
-        blank=True,
-        decimal_places=15,
-        max_digits=19,
-        default=0
+        null=True, blank=True, decimal_places=15, max_digits=19, default=0
     )
 
     class Meta:
@@ -67,20 +55,22 @@ class Location(models.Model):
         Used in Elasticsearch indexing/tests of `geo_distance` native filter.
         """
         return {
-            'lat': self.latitude,
-            'lon': self.longitude,
+            "lat": self.latitude,
+            "lon": self.longitude,
         }
 
     @property
     def full(self):
-        return "{address_street} {address_no}, {postcode} {address_town}" \
-               "{authority_name}".format(
-                    address_street=self.address_street,
-                    address_no=self.address_no,
-                    postcode=self.postcode,
-                    address_town=self.address_town,
-                    authority_name=self.authority_name
-                )
+        return (
+            "{address_street} {address_no}, {postcode} {address_town}"
+            "{authority_name}".format(
+                address_street=self.address_street,
+                address_no=self.address_no,
+                postcode=self.postcode,
+                address_town=self.address_town,
+                authority_name=self.authority_name,
+            )
+        )
 
     @property
     def partial(self):

@@ -167,7 +167,7 @@ class SuggesterFilterBackend(BaseFilterBackend, FilterBackendMixin):
         filter_fields = view.suggester_fields
 
         for field, options in filter_fields.items():
-            if options is None or isinstance(options, string_types):
+            if options is None or isinstance(options, str):
                 filter_fields[field] = {"field": options or field}
             elif "field" not in filter_fields[field]:
                 filter_fields[field]["field"] = field

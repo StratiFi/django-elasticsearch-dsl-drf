@@ -12,13 +12,12 @@ from django_elasticsearch_dsl_drf.viewsets import (
 from .base import BaseBookDocumentViewSet
 
 __all__ = (
-    'BookMoreLikeThisDocumentViewSet',
-    'BookMoreLikeThisNoOptionsDocumentViewSet',
+    "BookMoreLikeThisDocumentViewSet",
+    "BookMoreLikeThisNoOptionsDocumentViewSet",
 )
 
 
-class BookMoreLikeThisDocumentViewSet(BaseBookDocumentViewSet,
-                                      MoreLikeThisMixin):
+class BookMoreLikeThisDocumentViewSet(BaseBookDocumentViewSet, MoreLikeThisMixin):
     """Same as BookDocumentViewSet, with more-like-this and no facets."""
 
     filter_backends = [
@@ -32,10 +31,10 @@ class BookMoreLikeThisDocumentViewSet(BaseBookDocumentViewSet,
 
     # More-like-this options
     more_like_this_options = {
-        'fields': (
-            'title.mlt',
-            'summary.mlt',
-            'description.mlt',
+        "fields": (
+            "title.mlt",
+            "summary.mlt",
+            "description.mlt",
             # 'title.raw',
             # 'summary.raw',
             # 'description.raw',
@@ -48,8 +47,9 @@ class BookMoreLikeThisDocumentViewSet(BaseBookDocumentViewSet,
     }
 
 
-class BookMoreLikeThisNoOptionsDocumentViewSet(BaseBookDocumentViewSet,
-                                               MoreLikeThisMixin):
+class BookMoreLikeThisNoOptionsDocumentViewSet(
+    BaseBookDocumentViewSet, MoreLikeThisMixin
+):
     """Same as BookDocumentViewSet, with more-like-this and no facets."""
 
     filter_backends = [

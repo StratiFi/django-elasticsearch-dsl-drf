@@ -2,8 +2,6 @@
 Test multi match search filter backend.
 """
 
-from __future__ import absolute_import
-
 import unittest
 
 from django.core.management import call_command
@@ -15,9 +13,7 @@ from rest_framework import status
 
 from books import constants
 import factories
-from search_indexes.viewsets import (
-    BookMultiMatchSearchFilterBackendDocumentViewSet
-)
+from search_indexes.viewsets import BookMultiMatchSearchFilterBackendDocumentViewSet
 from ..filter_backends import MultiMatchSearchFilterBackend
 
 from .base import (
@@ -26,13 +22,11 @@ from .base import (
     CORE_API_AND_CORE_SCHEMA_MISSING_MSG,
 )
 
-__title__ = 'django_elasticsearch_dsl_drf.tests.test_search_multi_match'
-__author__ = 'Artur Barseghyan <artur.barseghyan@gmail.com>'
-__copyright__ = '2017-2020 Artur Barseghyan'
-__license__ = 'GPL 2.0/LGPL 2.1'
-__all__ = (
-    'TestMultiMatchSearch',
-)
+__title__ = "django_elasticsearch_dsl_drf.tests.test_search_multi_match"
+__author__ = "Artur Barseghyan <artur.barseghyan@gmail.com>"
+__copyright__ = "2017-2020 Artur Barseghyan"
+__license__ = "GPL 2.0/LGPL 2.1"
+__all__ = ("TestMultiMatchSearch",)
 
 
 @pytest.mark.django_db
@@ -43,23 +37,21 @@ class TestMultiMatchSearch(BaseRestFrameworkTestCase):
 
     @classmethod
     def setUpClass(cls):
-        super(TestMultiMatchSearch, cls).setUpClass()
+        super().setUpClass()
 
         # Book factories with unique title
         cls.special_count = 10
         cls.special = factories.BookWithUniqueTitleFactory.create_batch(
             cls.special_count,
             **{
-                'summary': 'Delusional Insanity, fine art photography',
-                'state': constants.BOOK_PUBLISHING_STATUS_PUBLISHED,
-            }
+                "summary": "Delusional Insanity, fine art photography",
+                "state": constants.BOOK_PUBLISHING_STATUS_PUBLISHED,
+            },
         )
 
         # Lorem ipsum book factories
         cls.lorem_count = 10
-        cls.lorem = factories.BookWithUniqueTitleFactory.create_batch(
-            cls.lorem_count
-        )
+        cls.lorem = factories.BookWithUniqueTitleFactory.create_batch(cls.lorem_count)
 
         # Book factories with title, description and summary that actually
         # make sense
@@ -76,9 +68,7 @@ class TestMultiMatchSearch(BaseRestFrameworkTestCase):
             factories.BookChapter112Factory(),
         ]
 
-        cls.all_count = (
-            cls.special_count + cls.lorem_count + cls.non_lorem_count
-        )
+        cls.all_count = cls.special_count + cls.lorem_count + cls.non_lorem_count
 
         cls.cities_count = 20
         cls.cities = factories.CityFactory.create_batch(cls.cities_count)
@@ -89,24 +79,23 @@ class TestMultiMatchSearch(BaseRestFrameworkTestCase):
         # fails. Before there's a better approach, this would stay so. The
         # create_batch part (below) will remain commented out, until there's a
         # better solution.
-        cls.switzerland = factories.CountryFactory.create(name='Wonderland')
+        cls.switzerland = factories.CountryFactory.create(name="Wonderland")
         cls.switz_cities_count = 10
         cls.switz_cities_names = [
-            'Zurich',
-            'Geneva',
-            'Basel',
-            'Lausanne',
-            'Bern',
-            'Winterthur',
-            'Lucerne',
-            'St. Gallen',
-            'Lugano',
-            'Biel/Bienne',
+            "Zurich",
+            "Geneva",
+            "Basel",
+            "Lausanne",
+            "Bern",
+            "Winterthur",
+            "Lucerne",
+            "St. Gallen",
+            "Lugano",
+            "Biel/Bienne",
         ]
         for switz_city in cls.switz_cities_names:
             cls.switz_cities = factories.CityFactory(
-                name=switz_city,
-                country=cls.switzerland
+                name=switz_city, country=cls.switzerland
             )
         # cls.switz_cities = factories.CityFactory.create_batch(
         #     cls.switz_cities_count,
@@ -115,7 +104,7 @@ class TestMultiMatchSearch(BaseRestFrameworkTestCase):
         cls.all_cities_count = cls.cities_count + cls.switz_cities_count
 
         cls.sleep()
-        call_command('search_index', '--rebuild', '-f')
+        call_command("search_index", "--rebuild", "-f")
 
         # Testing coreapi and coreschema
         cls.backend = MultiMatchSearchFilterBackend()
@@ -126,28 +115,21 @@ class TestMultiMatchSearch(BaseRestFrameworkTestCase):
         self.authenticate()
 
         if url is None:
-            url = reverse(
-                'bookdocument_multi_match_search_backend-list',
-                kwargs={}
-            )
+            url = reverse("bookdocument_multi_match_search_backend-list", kwargs={})
 
         data = {}
 
         # Should contain 20 results
         response = self.client.get(url, data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(response.data['results']), self.all_count)
+        self.assertEqual(len(response.data["results"]), self.all_count)
 
         # Should contain only 10 results
         filtered_response = self.client.get(
-            url + '?search_multi_match={}'.format(search_term),
-            data
+            url + f"?search_multi_match={search_term}", data
         )
         self.assertEqual(filtered_response.status_code, status.HTTP_200_OK)
-        self.assertEqual(
-            len(filtered_response.data['results']),
-            num_results
-        )
+        self.assertEqual(len(filtered_response.data["results"]), num_results)
 
     def _search_boost(self, search_term, ordering, url=None):
         """Search boost.
@@ -176,28 +158,22 @@ class TestMultiMatchSearch(BaseRestFrameworkTestCase):
 
         if url is None:
             url = reverse(
-                'bookdocument_multi_match_phrase_prefix_search_backend-list',
-                kwargs={}
+                "bookdocument_multi_match_phrase_prefix_search_backend-list", kwargs={}
             )
         data = {}
 
         filtered_response = self.client.get(
-            url + '?search_multi_match={}'.format(search_term),
-            data
+            url + f"?search_multi_match={search_term}", data
         )
         self.assertEqual(filtered_response.status_code, status.HTTP_200_OK)
-        self.assertIn('results', filtered_response.data)
+        self.assertIn("results", filtered_response.data)
         for counter, item_id in enumerate(ordering):
-            result_item = filtered_response.data['results'][counter]
-            self.assertEqual(result_item['id'], item_id)
+            result_item = filtered_response.data["results"][counter]
+            self.assertEqual(result_item["id"], item_id)
 
     def test_search(self, url=None):
         """Search."""
-        return self._search(
-            search_term='Pool of Tears',
-            num_results=3,
-            url=url
-        )
+        return self._search(search_term="Pool of Tears", num_results=3, url=url)
 
     def test_search_boost(self, url=None):
         """Search boost.
@@ -212,7 +188,7 @@ class TestMultiMatchSearch(BaseRestFrameworkTestCase):
                 self.non_lorem[1].pk,
                 self.non_lorem[2].pk,
             ],
-            url=url
+            url=url,
         )
 
         # Search for: Pig and Pepper
@@ -221,7 +197,7 @@ class TestMultiMatchSearch(BaseRestFrameworkTestCase):
             ordering=[
                 self.non_lorem[3].pk,
             ],
-            url=url
+            url=url,
         )
 
         # Search for: and Pepper"
@@ -232,7 +208,7 @@ class TestMultiMatchSearch(BaseRestFrameworkTestCase):
                 self.non_lorem[4].pk,
                 self.non_lorem[5].pk,
             ],
-            url=url
+            url=url,
         )
 
         # Search for: Who Stole the Tarts
@@ -241,7 +217,7 @@ class TestMultiMatchSearch(BaseRestFrameworkTestCase):
             ordering=[
                 self.non_lorem[6].pk,
             ],
-            url=url
+            url=url,
         )
 
         # Search for: Stole the Tarts
@@ -251,7 +227,7 @@ class TestMultiMatchSearch(BaseRestFrameworkTestCase):
                 self.non_lorem[6].pk,
                 self.non_lorem[7].pk,
             ],
-            url=url
+            url=url,
         )
 
         # Search for: the Tarts
@@ -262,7 +238,7 @@ class TestMultiMatchSearch(BaseRestFrameworkTestCase):
                 self.non_lorem[7].pk,
                 self.non_lorem[8].pk,
             ],
-            url=url
+            url=url,
         )
 
     def test_search_selected_fields(self, url=None):
@@ -271,11 +247,7 @@ class TestMultiMatchSearch(BaseRestFrameworkTestCase):
         :return:
         """
         # Search for (only in `title` and `summary`): and Pepper
-        self._search(
-            search_term='title,summary:and Pepper',
-            num_results=2,
-            url=url
-        )
+        self._search(search_term="title,summary:and Pepper", num_results=2, url=url)
 
     def test_search_boost_selected_fields(self, url=None):
         """Search boost.
@@ -284,24 +256,26 @@ class TestMultiMatchSearch(BaseRestFrameworkTestCase):
         """
         # Search for (only in `title` and `summary`): and Pepper
         self._search_boost(
-            search_term='title,summary:and Pepper',
+            search_term="title,summary:and Pepper",
             ordering=[
                 self.non_lorem[3].pk,
                 self.non_lorem[4].pk,
             ],
-            url=url
+            url=url,
         )
 
-    @unittest.skipIf(not CORE_API_AND_CORE_SCHEMA_ARE_INSTALLED,
-                     CORE_API_AND_CORE_SCHEMA_MISSING_MSG)
+    @unittest.skipIf(
+        not CORE_API_AND_CORE_SCHEMA_ARE_INSTALLED, CORE_API_AND_CORE_SCHEMA_MISSING_MSG
+    )
     def test_schema_fields_with_filter_fields_list(self):
         """Test schema field generator"""
         fields = self.backend.get_schema_fields(self.view)
         fields = [f.name for f in fields]
-        self.assertEqual(fields, ['search'])
+        self.assertEqual(fields, ["search"])
 
-    @unittest.skipIf(not CORE_API_AND_CORE_SCHEMA_ARE_INSTALLED,
-                     CORE_API_AND_CORE_SCHEMA_MISSING_MSG)
+    @unittest.skipIf(
+        not CORE_API_AND_CORE_SCHEMA_ARE_INSTALLED, CORE_API_AND_CORE_SCHEMA_MISSING_MSG
+    )
     def test_schema_field_not_required(self):
         """Test schema fields always not required"""
         fields = self.backend.get_schema_fields(self.view)
@@ -310,5 +284,5 @@ class TestMultiMatchSearch(BaseRestFrameworkTestCase):
             self.assertFalse(field)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

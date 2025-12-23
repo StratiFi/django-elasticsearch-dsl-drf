@@ -127,7 +127,7 @@ class SearchFilterBackend(BaseFilterBackend, FilterBackendMixin):
                         field = "{}.{}".format(path, _field["name"])
                     # In case if we deal with structure 1
                     else:
-                        field = "{}.{}".format(path, _field)
+                        field = f"{path}.{_field}"
 
                     field_kwargs = {field: search_term}
 

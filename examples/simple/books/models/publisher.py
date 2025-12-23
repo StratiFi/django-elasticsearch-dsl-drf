@@ -1,6 +1,6 @@
 from django.db import models
 
-__all__ = ('Publisher',)
+__all__ = ("Publisher",)
 
 
 class Publisher(models.Model):
@@ -14,18 +14,10 @@ class Publisher(models.Model):
     country = models.CharField(max_length=50)
     website = models.URLField()
     latitude = models.DecimalField(
-        null=True,
-        blank=True,
-        decimal_places=15,
-        max_digits=19,
-        default=0
+        null=True, blank=True, decimal_places=15, max_digits=19, default=0
     )
     longitude = models.DecimalField(
-        null=True,
-        blank=True,
-        decimal_places=15,
-        max_digits=19,
-        default=0
+        null=True, blank=True, decimal_places=15, max_digits=19, default=0
     )
 
     class Meta:
@@ -43,8 +35,8 @@ class Publisher(models.Model):
         Used in Elasticsearch indexing/tests of `geo_distance` native filter.
         """
         return {
-            'lat': self.latitude,
-            'lon': self.longitude,
+            "lat": self.latitude,
+            "lon": self.longitude,
         }
 
     @property
@@ -54,8 +46,8 @@ class Publisher(models.Model):
         Used in Elasticsearch indexing/tests of `geo_shape` native filter.
         """
         return {
-            'type': 'point',
-            'coordinates': [self.latitude, self.longitude],
+            "type": "point",
+            "coordinates": [self.latitude, self.longitude],
         }
 
     @property
@@ -65,7 +57,7 @@ class Publisher(models.Model):
         Used in Elasticsearch indexing/tests of `geo_shape` native filter.
         """
         return {
-            'type': 'circle',
-            'coordinates': [self.latitude, self.longitude],
-            'radius': '10km',
+            "type": "circle",
+            "coordinates": [self.latitude, self.longitude],
+            "radius": "10km",
         }

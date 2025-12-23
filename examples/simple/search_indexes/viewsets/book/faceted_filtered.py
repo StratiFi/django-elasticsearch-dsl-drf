@@ -6,9 +6,7 @@ from django_elasticsearch_dsl_drf.filter_backends import (
 from .base import BaseBookDocumentViewSet
 
 
-__all__ = (
-    'FacetedFilteredBookDocumentViewSet',
-)
+__all__ = ("FacetedFilteredBookDocumentViewSet",)
 
 
 class FacetedFilteredBookDocumentViewSet(BaseBookDocumentViewSet):
@@ -20,10 +18,10 @@ class FacetedFilteredBookDocumentViewSet(BaseBookDocumentViewSet):
     ]
 
     filter_fields = {
-        'title': 'title.raw',
-        'state': 'state.raw',
+        "title": "title.raw",
+        "state": "state.raw",
     }
 
     faceted_search_fields = {
-        'state': 'state.raw',
+        "state": "state.raw",
     }

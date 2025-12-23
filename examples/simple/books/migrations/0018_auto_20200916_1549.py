@@ -7,39 +7,73 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('books', '0017_location'),
+        ("books", "0017_location"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Galaxy',
+            name="Galaxy",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=255)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=255)),
             ],
             options={
-                'ordering': ['id'],
+                "ordering": ["id"],
             },
         ),
         migrations.AlterField(
-            model_name='location',
-            name='group',
-            field=models.CharField(choices=[('Office', 'Office'), ('Industrial', 'Industrial'), ('Retail', 'Retail'), ('Leisure', 'Leisure')], max_length=255),
+            model_name="location",
+            name="group",
+            field=models.CharField(
+                choices=[
+                    ("Office", "Office"),
+                    ("Industrial", "Industrial"),
+                    ("Retail", "Retail"),
+                    ("Leisure", "Leisure"),
+                ],
+                max_length=255,
+            ),
         ),
         migrations.CreateModel(
-            name='Planet',
+            name="Planet",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=255)),
-                ('galaxy', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='books.galaxy')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=255)),
+                (
+                    "galaxy",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE, to="books.galaxy"
+                    ),
+                ),
             ],
             options={
-                'ordering': ['id'],
+                "ordering": ["id"],
             },
         ),
         migrations.AddField(
-            model_name='address',
-            name='planet',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='books.planet'),
+            model_name="address",
+            name="planet",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.CASCADE,
+                to="books.planet",
+            ),
         ),
     ]

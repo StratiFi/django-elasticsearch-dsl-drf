@@ -322,7 +322,7 @@ class BookCustomDocumentViewSet(BookFrontendDocumentViewSet):
         print("as_view")
         print("actions: ", actions)
         print("initkwargs: ", initkwargs)
-        return super(BookCustomDocumentViewSet, cls).as_view(actions, **initkwargs)
+        return super().as_view(actions, **initkwargs)
 
     def retrieve(self, request, *args, **kwargs):
         # Used for detail routes, like
@@ -331,7 +331,7 @@ class BookCustomDocumentViewSet(BookFrontendDocumentViewSet):
         print("request: ", request)
         print("args: ", args)
         print("kwargs: ", kwargs)
-        return super(BookCustomDocumentViewSet, self).retrieve(request, *args, **kwargs)
+        return super().retrieve(request, *args, **kwargs)
 
     def list(self, request, *args, **kwargs):
         # Used for list routes, like
@@ -340,7 +340,7 @@ class BookCustomDocumentViewSet(BookFrontendDocumentViewSet):
         print("request: ", request)
         print("args: ", args)
         print("kwargs: ", kwargs)
-        return super(BookCustomDocumentViewSet, self).list(request, *args, **kwargs)
+        return super().list(request, *args, **kwargs)
 
     @action(detail=False)
     def suggest(self, request):
@@ -348,7 +348,7 @@ class BookCustomDocumentViewSet(BookFrontendDocumentViewSet):
         # http://localhost:8000/search/books-custom/suggest/?title_suggest=A
         print("suggest")
         print("request: ", request)
-        return super(BookCustomDocumentViewSet, self).suggest(request)
+        return super().suggest(request)
 
     @action(detail=False)
     def functional_suggest(self, request):
@@ -357,4 +357,4 @@ class BookCustomDocumentViewSet(BookFrontendDocumentViewSet):
         # ?title_suggest=A
         print("functional_suggest")
         print("request: ", request)
-        return super(BookCustomDocumentViewSet, self).suggest(request)
+        return super().suggest(request)

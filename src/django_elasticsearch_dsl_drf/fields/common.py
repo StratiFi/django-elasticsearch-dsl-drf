@@ -5,17 +5,17 @@ Common fields.
 from rest_framework import serializers
 from .helpers import to_representation
 
-__title__ = 'django_elasticsearch_dsl_drf.fields.nested_fields'
-__author__ = 'Artur Barseghyan <artur.barseghyan@gmail.com>'
-__copyright__ = '2017-2020 Artur Barseghyan'
-__license__ = 'GPL 2.0/LGPL 2.1'
+__title__ = "django_elasticsearch_dsl_drf.fields.nested_fields"
+__author__ = "Artur Barseghyan <artur.barseghyan@gmail.com>"
+__copyright__ = "2017-2020 Artur Barseghyan"
+__license__ = "GPL 2.0/LGPL 2.1"
 __all__ = (
-    'BooleanField',
-    'CharField',
-    'DateField',
-    'FloatField',
-    'IntegerField',
-    'IPAddressField',
+    "BooleanField",
+    "CharField",
+    "DateField",
+    "FloatField",
+    "IntegerField",
+    "IPAddressField",
 )
 
 
@@ -24,7 +24,7 @@ class BooleanField(serializers.BooleanField):
 
     def get_value(self, dictionary):
         """Get value."""
-        value = super(BooleanField, self).get_value(dictionary)
+        value = super().get_value(dictionary)
         return to_representation(value)
 
     def to_representation(self, value):
@@ -37,7 +37,7 @@ class CharField(serializers.CharField):
 
     def get_value(self, dictionary):
         """Get value."""
-        value = super(CharField, self).get_value(dictionary)
+        value = super().get_value(dictionary)
         return to_representation(value)
 
     def to_representation(self, value):
@@ -50,7 +50,7 @@ class DateField(serializers.DateField):
 
     def get_value(self, dictionary):
         """Get value."""
-        value = super(DateField, self).get_value(dictionary)
+        value = super().get_value(dictionary)
         return to_representation(value)
 
     def to_representation(self, value):
@@ -63,7 +63,7 @@ class FloatField(serializers.FloatField):
 
     def get_value(self, dictionary):
         """Get value."""
-        value = super(FloatField, self).get_value(dictionary)
+        value = super().get_value(dictionary)
         return to_representation(value)
 
     def to_representation(self, value):
@@ -76,7 +76,7 @@ class IntegerField(serializers.IntegerField):
 
     def get_value(self, dictionary):
         """Get value."""
-        value = super(IntegerField, self).get_value(dictionary)
+        value = super().get_value(dictionary)
         return to_representation(value)
 
     def to_representation(self, value):
@@ -89,7 +89,7 @@ class IPAddressField(serializers.IPAddressField):
 
     def get_value(self, dictionary):
         """Get value."""
-        value = super(IPAddressField, self).get_value(dictionary)
+        value = super().get_value(dictionary)
         return to_representation(value)
 
     def to_representation(self, value):

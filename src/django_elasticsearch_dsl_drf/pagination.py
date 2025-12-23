@@ -1,9 +1,6 @@
-# coding: utf-8
 """
 Pagination.
 """
-
-from __future__ import unicode_literals
 
 from collections import OrderedDict
 
@@ -49,7 +46,7 @@ class Page(django_paginator.Page, GetCountMixin):
     def __init__(self, object_list, number, paginator, facets):
         self.facets = facets
         self.count = self.get_es_count(object_list)
-        super(Page, self).__init__(object_list, number, paginator)
+        super().__init__(object_list, number, paginator)
 
 
 class Paginator(django_paginator.Paginator):
@@ -128,7 +125,7 @@ class PageNumberPagination(pagination.PageNumberPagination, GetCountMixin):
         # self.page = None
         # self.request = None
         self.count = None
-        super(PageNumberPagination, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
     def get_facets(self, page=None):
         """Get facets.
@@ -193,7 +190,7 @@ class PageNumberPagination(pagination.PageNumberPagination, GetCountMixin):
             self.page = paginator.page(page_number)
         except django_paginator.InvalidPage as exc:
             msg = self.invalid_page_message.format(
-                page_number=page_number, message=six.text_type(exc)
+                page_number=page_number, message=str(exc)
             )
             raise NotFound(msg)
 
@@ -305,7 +302,7 @@ class QueryFriendlyPageNumberPagination(PageNumberPagination):
             self.page = paginator.page(page_number)
         except django_paginator.InvalidPage as exc:
             msg = self.invalid_page_message.format(
-                page_number=page_number, message=six.text_type(exc)
+                page_number=page_number, message=str(exc)
             )
             raise NotFound(msg)
 
@@ -337,7 +334,7 @@ class LimitOffsetPagination(pagination.LimitOffsetPagination, GetCountMixin):
         # self.limit = None
         # self.offset = None
         # self.request = None
-        super(LimitOffsetPagination, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
     def paginate_queryset(self, queryset, request, view=None):
         # Check if there are suggest queries in the queryset,

@@ -1,7 +1,7 @@
 from django.conf import settings
 from django.db import models
 
-__all__ = ('Journal',)
+__all__ = ("Journal",)
 
 
 class Journal(models.Model):

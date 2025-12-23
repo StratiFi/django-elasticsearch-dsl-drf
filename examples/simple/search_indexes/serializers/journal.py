@@ -3,9 +3,7 @@ from django_elasticsearch_dsl_drf.serializers import DocumentSerializer
 
 from ..documents import JournalDocument
 
-__all__ = (
-    'JournalDocumentSerializer',
-)
+__all__ = ("JournalDocumentSerializer",)
 
 
 class JournalDocumentSerializer(DocumentSerializer):
@@ -18,18 +16,18 @@ class JournalDocumentSerializer(DocumentSerializer):
 
         document = JournalDocument
         fields = (
-            'title',
-            'description',
-            'summary',
-            'publication_date',
-            'isbn',
-            'price',
-            'pages',
-            'stock_count',
-            'created',
+            "title",
+            "description",
+            "summary",
+            "publication_date",
+            "isbn",
+            "price",
+            "pages",
+            "stock_count",
+            "created",
         )
 
     def get_score(self, obj):
-        if hasattr(obj.meta, 'score'):
+        if hasattr(obj.meta, "score"):
             return obj.meta.score
         return None

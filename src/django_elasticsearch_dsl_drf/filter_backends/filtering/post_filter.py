@@ -12,12 +12,13 @@ from ...constants import ALL_LOOKUP_FILTERS_AND_QUERIES
 
 from .common import FilteringFilterBackend
 
-__title__ = 'django_elasticsearch_dsl_drf.filter_backends.filtering.' \
-            'post_filter.common'
-__author__ = 'Artur Barseghyan <artur.barseghyan@gmail.com>'
-__copyright__ = '2017-2020 Artur Barseghyan'
-__license__ = 'GPL 2.0/LGPL 2.1'
-__all__ = ('PostFilterFilteringFilterBackend',)
+__title__ = (
+    "django_elasticsearch_dsl_drf.filter_backends.filtering." "post_filter.common"
+)
+__author__ = "Artur Barseghyan <artur.barseghyan@gmail.com>"
+__copyright__ = "2017-2020 Artur Barseghyan"
+__license__ = "GPL 2.0/LGPL 2.1"
+__all__ = ("PostFilterFilteringFilterBackend",)
 
 
 class PostFilterFilteringFilterBackend(FilteringFilterBackend):
@@ -75,17 +76,13 @@ class PostFilterFilteringFilterBackend(FilteringFilterBackend):
         filter_fields = view.post_filter_fields
 
         for field, options in filter_fields.items():
-            if options is None or isinstance(options, string_types):
-                filter_fields[field] = {
-                    'field': options or field
-                }
-            elif 'field' not in filter_fields[field]:
-                filter_fields[field]['field'] = field
+            if options is None or isinstance(options, str):
+                filter_fields[field] = {"field": options or field}
+            elif "field" not in filter_fields[field]:
+                filter_fields[field]["field"] = field
 
-            if 'lookups' not in filter_fields[field]:
-                filter_fields[field]['lookups'] = tuple(
-                    ALL_LOOKUP_FILTERS_AND_QUERIES
-                )
+            if "lookups" not in filter_fields[field]:
+                filter_fields[field]["lookups"] = tuple(ALL_LOOKUP_FILTERS_AND_QUERIES)
 
         return filter_fields
 
@@ -129,21 +126,25 @@ class PostFilterFilteringFilterBackend(FilteringFilterBackend):
         return field_cls()
 
     def get_schema_fields(self, view):
-        assert coreapi is not None, 'coreapi must be installed to ' \
-                                    'use `get_schema_fields()`'
-        assert coreschema is not None, 'coreschema must be installed to ' \
-                                       'use `get_schema_fields()`'
-        filter_fields = getattr(view, 'post_filter_fields', None)
-        document = getattr(view, 'document', None)
+        assert coreapi is not None, (
+            "coreapi must be installed to " "use `get_schema_fields()`"
+        )
+        assert coreschema is not None, (
+            "coreschema must be installed to " "use `get_schema_fields()`"
+        )
+        filter_fields = getattr(view, "post_filter_fields", None)
+        document = getattr(view, "document", None)
 
-        return [] if not filter_fields else [
-            coreapi.Field(
-                name=field_name,
-                required=False,
-                location='query',
-                schema=self.get_coreschema_field(
-                    document._fields.get(field_name)
+        return (
+            []
+            if not filter_fields
+            else [
+                coreapi.Field(
+                    name=field_name,
+                    required=False,
+                    location="query",
+                    schema=self.get_coreschema_field(document._fields.get(field_name)),
                 )
-            )
-            for field_name in filter_fields
-        ]
+                for field_name in filter_fields
+            ]
+        )

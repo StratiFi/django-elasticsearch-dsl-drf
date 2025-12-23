@@ -98,7 +98,7 @@ class GeoSpatialFilteringFilterBackend(BaseFilterBackend, FilterBackendMixin):
         filter_fields = view.geo_spatial_filter_fields
 
         for field, options in filter_fields.items():
-            if options is None or isinstance(options, string_types):
+            if options is None or isinstance(options, str):
                 filter_fields[field] = {"field": options or field}
             elif "field" not in filter_fields[field]:
                 filter_fields[field]["field"] = field
@@ -472,7 +472,7 @@ class GeoSpatialFilteringFilterBackend(BaseFilterBackend, FilterBackendMixin):
         return queryset.query(
             Q(
                 "geo_bounding_box",
-                **cls.get_geo_bounding_box_params(value, options["field"])
+                **cls.get_geo_bounding_box_params(value, options["field"]),
             )
         )
 

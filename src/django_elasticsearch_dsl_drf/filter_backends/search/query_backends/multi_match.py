@@ -137,7 +137,7 @@ class MultiMatchQueryBackend(BaseSearchQueryBackend):
                     cls.query_type,
                     query=__search_term,
                     fields=query_fields,
-                    **cls.get_query_options(request, view, search_backend)
+                    **cls.get_query_options(request, view, search_backend),
                 )
             )
 

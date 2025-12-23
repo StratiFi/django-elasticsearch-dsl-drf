@@ -5,24 +5,24 @@ from books.models import Country
 
 from .factory_faker import Faker
 
-__all__ = ('CountryFactory',)
+__all__ = ("CountryFactory",)
 
 
 class BaseCountryFactory(DjangoModelFactory):
     """Base country factory."""
 
-    name = Faker('country')
-    info = Faker('text')
-    continent = SubFactory('factories.books_continent.ContinentFactory')
-    latitude = Faker('latitude')
-    longitude = Faker('longitude')
+    name = Faker("country")
+    info = Faker("text")
+    continent = SubFactory("factories.books_continent.ContinentFactory")
+    latitude = Faker("latitude")
+    longitude = Faker("longitude")
 
     class Meta:
         """Meta class."""
 
         model = Country
         abstract = True
-        django_get_or_create = ('name',)
+        django_get_or_create = ("name",)
 
 
 class CountryFactory(BaseCountryFactory):
