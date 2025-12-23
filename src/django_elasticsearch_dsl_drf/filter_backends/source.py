@@ -1,13 +1,14 @@
 """
 Source backend.
 """
+
 from rest_framework.filters import BaseFilterBackend
 
-__title__ = 'django_elasticsearch_dsl_drf.source'
-__author__ = 'Artur Barseghyan <artur.barseghyan@gmail.com>'
-__copyright__ = '2017-2020 Artur Barseghyan'
-__license__ = 'GPL 2.0/LGPL 2.1'
-__all__ = ('SourceBackend',)
+__title__ = "django_elasticsearch_dsl_drf.source"
+__author__ = "Artur Barseghyan <artur.barseghyan@gmail.com>"
+__copyright__ = "2017-2020 Artur Barseghyan"
+__license__ = "GPL 2.0/LGPL 2.1"
+__all__ = ("SourceBackend",)
 
 
 class SourceBackend(BaseFilterBackend):
@@ -59,12 +60,12 @@ class SourceBackend(BaseFilterBackend):
         :param queryset: Base queryset.
         :param view: View.
         :type request: rest_framework.request.Request
-        :type queryset: elasticsearch_dsl.search.Search
+        :type queryset: elasticsearch.dsl.search.Search
         :type view: rest_framework.viewsets.ReadOnlyModelViewSet
         :return: Updated queryset.
-        :rtype: elasticsearch_dsl.search.Search
+        :rtype: elasticsearch.dsl.search.Search
         """
-        if getattr(view, 'source', None) is not None:
+        if getattr(view, "source", None) is not None:
             queryset = queryset.source(view.source)
 
         return queryset

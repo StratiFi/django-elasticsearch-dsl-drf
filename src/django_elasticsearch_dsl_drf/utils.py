@@ -3,52 +3,8 @@ Utils.
 """
 
 import datetime
-from elasticsearch_dsl.search import AggsProxy
 
-
-__title__ = 'django_elasticsearch_dsl_drf.utils'
-__author__ = 'Artur Barseghyan <artur.barseghyan@gmail.com>'
-__copyright__ = '2017-2020 Artur Barseghyan'
-__license__ = 'GPL 2.0/LGPL 2.1'
-__all__ = (
-    'DictionaryProxy',
-    'EmptySearch',
-)
-
-
-class EmptySearch(object):
-    """Empty Search."""
-
-    def __init__(self, *args, **kwargs):
-        self.aggs = AggsProxy('')
-        self._highlight = {}
-        self._sort = []
-        self.total = 0
-
-    def __len__(self):
-        return 0
-
-    def __iter__(self):
-        return iter([])
-
-    def __getitem__(self, *args, **kwargs):
-        return self
-
-    def highlight(self, *args, **kwargs):
-        return self
-
-    def sort(self, *args, **kwargs):
-        return self
-
-    @property
-    def hits(self):
-        return self
-
-    def execute(self, *args, **kwargs):
-        return self
-
-    def to_dict(self, *args, **kwargs):
-        return {}
+from elasticsearch.dsl.search_base import EmptySearch
 
 
 class DictionaryProxy(object):
