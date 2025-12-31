@@ -3,7 +3,7 @@ Contains information about the current Elasticsearch version in use,
 including (LTE and GTE).
 """
 
-from distutils.version import LooseVersion
+from packaging.version import Version
 
 __title__ = "django_elasticsearch_dsl_drf.versions"
 __author__ = "Artur Barseghyan <artur.barseghyan@gmail.com>"
@@ -33,11 +33,11 @@ def get_elasticsearch_version(default=(2, 0, 0)):
         return default
 
 
-LOOSE_ELASTICSEARCH_VERSION = LooseVersion(
+LOOSE_ELASTICSEARCH_VERSION = Version(
     ".".join([str(__n) for __n in get_elasticsearch_version()])
 )
-LOOSE_ELASTICSEARCH_MINOR_VERSION = LooseVersion(
-    ".".join([str(i) for i in LOOSE_ELASTICSEARCH_VERSION.version[0:2]])
+LOOSE_ELASTICSEARCH_MINOR_VERSION = Version(
+    ".".join([str(i) for i in get_elasticsearch_version()[0:2]])
 )
 
 # Loose versions
@@ -65,7 +65,7 @@ LOOSE_VERSIONS = (
 
 for __v in LOOSE_VERSIONS:
     __var_name = "LOOSE_VERSION_{}".format(__v.replace(".", "_"))
-    globals()[__var_name] = LooseVersion(__v)
+    globals()[__var_name] = Version(__v)
     __all__.append(__var_name)
 
 # Exact versions
@@ -116,4 +116,4 @@ try:
 except NameError:
     pass
 
-del LooseVersion
+del Version
