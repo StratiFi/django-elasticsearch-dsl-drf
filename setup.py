@@ -158,8 +158,8 @@ except:
 install_requires = [
     "six>=1.9",
     "django-nine>=0.2",
-    "django-elasticsearch-dsl>=8.2.0,<9.0.0",
-    "elasticsearch>=8.18.0,<9.0.0",
+    "django-elasticsearch-dsl>=8.2.0",
+    "elasticsearch>=8.18.0",
     "djangorestframework",
 ]
 
