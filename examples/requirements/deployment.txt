@@ -32,8 +32,10 @@ jeepney==0.7.0
     #   secretstorage
 keyring==23.0.1
     # via twine
-packaging==21.0
-    # via bleach
+packaging==26.0
+    # via
+    #   bleach
+    #   wheel
 pep517==0.11.0
     # via pip-tools
 pip-tools==6.2.0
@@ -44,8 +46,6 @@ pycparser==2.20
     # via cffi
 pygments==2.9.0
     # via readme-renderer
-pyparsing==2.4.7
-    # via packaging
 readme-renderer==29.0
     # via twine
 requests==2.26.0
@@ -72,7 +72,7 @@ urllib3==1.26.6
     # via requests
 webencodings==0.5.1
     # via bleach
-wheel==0.36.2
+wheel==0.46.2
     # via pip-tools
 zipp==3.5.0
     # via importlib-metadata
